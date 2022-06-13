@@ -79,4 +79,8 @@ $_['text_instruction'] = 'CRON Instruções';
 $_['error_invalid_max_number'] = 'Aviso: Valor de encomenda máximo inválido!';
 $_['error_invalid_min_number'] = 'Aviso: Valor de encomenda mínimo inválido!';
 $_['error_incompatible_min_max'] = 'Aviso: Valor de encomenda mínimo e máximo não são compativeis!';
+$_['error_entity_required'] = 'Aviso: Entidade é obrigatória!';
+$_['error_sub_entity_required'] = 'Aviso: SubEntidade é obrigatória!';
+$_['error_dynamic_expiration_required'] = 'Aviso: expiração da referência dinâmica obrigatória!';
+
 ?>

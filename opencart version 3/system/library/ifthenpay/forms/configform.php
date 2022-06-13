@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ifthenpay\Forms;
 
+use Exception;
 use Ifthenpay\Payments\Gateway;
 use Ifthenpay\Callback\Callback;
 use Illuminate\Container\Container;
@@ -57,9 +58,7 @@ abstract class ConfigForm
     protected function addToOptions(): void
     {
         $this->ifthenpayGateway->setAccount((array) unserialize($this->ifthenpayController->config->get('payment_' . $this->paymentMethod . '_userAccount')));
-        $this->options[] = [
-            'value' => $this->ifthenpayController->language->get('choose_entity')
-        ];
+
         foreach ($this->ifthenpayGateway->getEntidadeSubEntidade($this->paymentMethod) as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $key2 => $value2) {
@@ -432,17 +431,18 @@ abstract class ConfigForm
         }
 
         // fix "callback not activated" red highlighted text when it actually is activated
-        if ($this->data['payment_' . $this->paymentMethod . '_sandboxMode'] == 1 ||
-            $this->data['payment_' . $this->paymentMethod . '_activateCallback'] == 0) {
-                $this->data['isCallbackActivatedAlert'] = false;
-            }
-            else{
-                $this->data['isCallbackActivatedAlert'] = true;
-            }
-            // set warning for enabled sandbox mode
-            if ($this->data['payment_' . $this->paymentMethod . '_sandboxMode'] == 1){
-                $this->data['isSandboxActivatedAlert'] = true;
-            }
+        if (
+            $this->data['payment_' . $this->paymentMethod . '_sandboxMode'] == 1 ||
+            $this->data['payment_' . $this->paymentMethod . '_activateCallback'] == 0
+        ) {
+            $this->data['isCallbackActivatedAlert'] = false;
+        } else {
+            $this->data['isCallbackActivatedAlert'] = true;
+        }
+        // set warning for enabled sandbox mode
+        if ($this->data['payment_' . $this->paymentMethod . '_sandboxMode'] == 1) {
+            $this->data['isSandboxActivatedAlert'] = true;
+        }
     }
 
     protected function validate()
@@ -479,7 +479,6 @@ abstract class ConfigForm
                     $this->ifthenpayController->{$this->dynamicModelName}->log('', 'Backoffice key saved with success');
                 } catch (\Throwable $th) {
                     $this->ifthenpayController->load->model('extension/payment/' . $this->paymentMethod);
-                    $this->ifthenpayController->{$this->dynamicModelName}->uninstall($this->ifthenpayContainer, $this->paymentMethod);
                     $this->ifthenpayController->model_setting_setting->deleteSetting('payment_' . $this->paymentMethod);
                     unset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_backofficeKey']);
                     $this->ifthenpayController->error['warning'] = $this->ifthenpayController
@@ -488,6 +487,8 @@ abstract class ConfigForm
                     return !$this->ifthenpayController->error;
                 }
             }
+        } else {
+            $this->validateEntitySubEntity();
         }
         return !$this->ifthenpayController->error;
     }
@@ -585,11 +586,13 @@ abstract class ConfigForm
      * Validate max min order value in admin module settings
      * @return void
      */
-    protected function validateMinMax() : void{
+    protected function validateMinMax(): void
+    {
 
-        if (isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_minimum_value']) && 
-        isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_maximum_value']))
-        {
+        if (
+            isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_minimum_value']) &&
+            isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_maximum_value'])
+        ) {
 
             $max = $this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_maximum_value'];
             $min = $this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_minimum_value'];
@@ -611,4 +614,70 @@ abstract class ConfigForm
         }
     }
 
+    /**
+     * Validates payment method specific values, such as entity subentity and other
+     */
+    protected function validateEntitySubEntity(): void
+    {
+        // validate multibanco entity and subentity
+        if ($this->paymentMethod == Gateway::MULTIBANCO) {
+
+            if (!isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_entidade'])) {
+
+                $this->ifthenpayController->error['warning'] = $this->ifthenpayController->language->get('error_entity_required');
+            } else if (!isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_subEntidade'])) {
+
+                // javascript will set a subentity by default when choosing a an entity, so if the above passes so should this one,
+                // but it is an added safety
+                $this->ifthenpayController->error['warning'] = $this->ifthenpayController->language->get('error_sub_entity_required');
+            } else if (
+                (isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_entidade']) && 
+                $this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_entidade'] === 'MB' &&
+                !isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_deadline'])) || 
+                (isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_deadline']) &&
+                $this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_deadline'] <= 0)
+            ) {
+                $this->ifthenpayController->error['warning'] = $this->ifthenpayController->language->get('error_dynamic_expiration_required');
+            }
+        }
+
+        // validate ccard key
+        if ($this->paymentMethod == Gateway::CCARD) {
+
+            if (!isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_ccardKey'])) {
+
+                $this->ifthenpayController->error['warning'] = $this->ifthenpayController->language->get('error_key_required');
+            }
+        }
+
+        // validate mbway key
+        if ($this->paymentMethod == Gateway::MBWAY) {
+
+            if (!isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_mbwayKey'])) {
+
+                $this->ifthenpayController->error['warning'] = $this->ifthenpayController->language->get('error_key_required');
+            }
+        }
+
+        // validate payshop key expiration
+        if ($this->paymentMethod == Gateway::PAYSHOP) {
+
+            if (!isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_payshopKey'])) {
+
+                $this->ifthenpayController->error['warning'] = $this->ifthenpayController->language->get('error_key_required');
+            } else if (
+                isset($this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_validade'])
+                && $this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_validade'] != ''
+            ) {
+
+                if (
+                    $this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_validade'] < 1 ||
+                    $this->ifthenpayController->request->post['payment_' . $this->paymentMethod . '_validade'] > 30
+                ) {
+
+                    $this->ifthenpayController->error['warning'] = $this->ifthenpayController->language->get('error_invalid_expiration');
+                }
+            }
+        }
+    }
 }

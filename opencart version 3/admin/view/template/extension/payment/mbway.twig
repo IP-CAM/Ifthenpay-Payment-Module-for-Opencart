@@ -135,6 +135,9 @@
 								<label class="col-sm-2 control-label" for="ifthenpayMbwayKey">{{ entry_mbway_mbwayKey }}</label>
 								<div class="col-sm-10">
 									<select name="payment_mbway_mbwayKey" id="ifthenpayMbwayKey" class="form-control">
+										{% if not payment_mbway_mbwayKey %}
+											<option value="" disabled selected hidden></option>
+										{% endif %}
 										{% for mbway_mbwayKey in mbway_mbwayKeys %}
 											{% if mbway_mbwayKey.value == payment_mbway_mbwayKey %}
 												<option value="{{ payment_mbway_mbwayKey }}" selected="selected">{{ payment_mbway_mbwayKey }}</option>
@@ -150,7 +153,7 @@
 								<div class="col-sm-10">
 									<select name="payment_mbway_order_status_canceled_id" id="input-order-status_canceled" class="form-control">
 										{% for order_status in order_statuses %}
-											{% if order_status.order_status_id == payment_mbway_order_status_canceled_id %}
+											{% if order_status.order_status_id == payment_mbway_order_status_canceled_id ?? 7 %}
 												<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 											{% else %}
 												<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -160,11 +163,13 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
+								<label class="col-sm-2 control-label" for="input-order-status">
+									<span data-toggle="tooltip" title="{{ help_entry_order_status_pending }}">{{ entry_order_status_pending }}</span>
+								</label>
 								<div class="col-sm-10">
 									<select name="payment_mbway_order_status_id" id="input-order-status" class="form-control">
 										{% for order_status in order_statuses %}
-											{% if order_status.order_status_id == payment_mbway_order_status_id %}
+											{% if order_status.order_status_id == payment_mbway_order_status_id ?? 1 %}
 												<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 											{% else %}
 												<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -178,7 +183,7 @@
 								<div class="col-sm-10">
 									<select name="payment_mbway_order_status_complete_id" id="input_order_status_complete" class="form-control">
 										{% for order_status in order_statuses %}
-											{% if order_status.order_status_id == payment_mbway_order_status_complete_id %}
+											{% if order_status.order_status_id == payment_mbway_order_status_complete_id ?? 2 %}
 												<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 											{% else %}
 												<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -193,7 +198,7 @@
 									<select name="payment_mbway_geo_zone_id" id="input-geo-zone" class="form-control">
 										<option value="0">{{ text_all_zones }}</option>
 										{% for geo_zone in geo_zones %}
-											{% if geo_zone.geo_zone_id == payment_mbway_geo_zone_id %}
+											{% if geo_zone.geo_zone_id == payment_mbway_geo_zone_id ?? 0 %}
 												<option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
 											{% else %}
 												<option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -203,21 +208,26 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-sort-order">{{ entry_minimum_value }}</label>
+								<label class="col-sm-2 control-label" for="input-sort-order">
+									<span data-toggle="tooltip" title="{{ help_entry_minimum_value }}">{{ entry_minimum_value }}</span>
+								</label>
 								<div class="col-sm-10">
-									<input type="number" id="input-minimum-value" name="payment_mbway_minimum_value" value="{{payment_mbway_minimum_value}}" step="0.01" placeholder="0.00" class="form-control"/>
+									<input type="number" id="input-minimum-value" name="payment_mbway_minimum_value" value="{{payment_mbway_minimum_value}}" step="0.01" placeholder="0.00" class="form-control" min="0"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-sort-order">{{ entry_maximum_value }}</label>
+								<label class="col-sm-2 control-label" for="input-sort-order">
+									<span data-toggle="tooltip" title="{{ help_entry_maximum_value }}">{{ entry_maximum_value }}</span>
+								</label>
 								<div class="col-sm-10">
-									<input type="number" id="input-minimum-value" name="payment_mbway_maximum_value" value="{{payment_mbway_maximum_value}}" step="0.01" placeholder="0.00" class="form-control"/>
+									<input type="number" id="input-minimum-value" name="payment_mbway_maximum_value" value="{{payment_mbway_maximum_value}}" step="0.01" placeholder="0.00" class="form-control" min="0"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label" for="input-status">{{ show_paymentMethod_logo }}</label>
 								<div class="col-sm-10">
 									<select name="payment_mbway_showPaymentMethodLogo" id="input-status" class="form-control">
+										{% set  payment_mbway_showPaymentMethodLogo = payment_mbway_showPaymentMethodLogo ?? 1 %}
 										{% if payment_mbway_showPaymentMethodLogo %}
 											<option value="1" selected="selected">{{ text_enabled }}</option>
 											<option value="0">{{ text_disabled }}</option>

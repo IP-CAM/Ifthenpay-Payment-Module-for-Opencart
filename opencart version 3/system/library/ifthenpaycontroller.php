@@ -136,7 +136,7 @@ class IfthenpayController extends Controller {
     public function requestNewAccount()
     {
         try {
-            $this->ioc->make(MailInterface::class)
+            $this->ifthenpayContainer->getIoc()->make(MailInterface::class)
                 ->setIfthenpayController($this)
                 ->setPaymentMethod($this->paymentMethod)
                 ->setSubject('Associar conta ' . $this->paymentMethod . ' ao contrato')

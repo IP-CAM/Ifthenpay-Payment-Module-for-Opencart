@@ -31,7 +31,9 @@ $_['moduleUpToDate'] = 'Your module is up to date!';
 $_['downloadUpdateModule'] = 'Download Update Module';
 $_['acess_user_documentation_link'] = 'https://www.ifthenpay.com/downloads/opencart/opencart_user_guide_en.pdf';
 $_['entry_minimum_value'] = 'Order Minimum Value';
+$_['help_entry_minimum_value'] = 'Only show customer this payment method if order value equal or greater than minimum value';
 $_['entry_maximum_value'] = 'Order Maximum Value';
+$_['help_entry_maximum_value'] = 'Only show customer this payment method if order value equal or less than maximum value';
 $_['resendPaymentData']	= 'Send email of order with payment data';
 
 
@@ -39,15 +41,16 @@ $_['resendPaymentData']	= 'Send email of order with payment data';
 $_['activate_callback'] = 'Activate Callback';
 $_['switch_enable'] = 'Enable';
 $_['switch_disable'] = 'Disable';
-$_['entry_order_status'] = 'Order Status:';
+$_['entry_order_status_pending'] = 'Order Status Pending:';
+$_['help_entry_order_status_pending'] = 'This status is assigned to the order upon it\'s creation and normaly, it is set as Pending';
 $_['entry_order_status_complete'] = 'Order Status Paid:';
 $_['entry_geo_zone'] = 'Geo Zone:';
 $_['entry_status'] = 'Status:';
 $_['entry_sort_order'] = 'Sort Order:';
 $_['entry_payshop_payshopKey'] = 'Payshop Key';
-$_['entry_payshop_validade'] = 'Validity';
-$_['payshop_validade_helper'] = 'Choose the number of days, leave empty if you do not want validity';
-$_['choose_entity'] = 'Choose Entity';
+$_['entry_payshop_validade'] = 'Expiration';
+$_['payshop_validade_helper'] = 'Choose the number of days, leave empty if you do not want Expiration';
+$_['choose_key'] = 'Choose a key';
 $_['entry_antiPhishingKey'] = 'Anti-Phishing key';
 $_['entry_urlCallback'] = 'Callback Url';
 $_['callbackIsActivated'] = 'Callback is activated';
@@ -78,4 +81,6 @@ $_['text_instruction'] = 'CRON Instructions';
 $_['error_invalid_max_number'] = 'Warning: Order Maximum Value invalid number!';
 $_['error_invalid_min_number'] = 'Warning: Order Minimum Value invalid number!';
 $_['error_incompatible_min_max'] = 'Warning: Order Minimum and Maximum Values are not compatible!';
+$_['error_key_required'] = 'Warning: Payshop key required!';
+$_['error_invalid_expiration'] = 'Warning: Invalid expiration!';
 ?>

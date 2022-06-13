@@ -84,7 +84,9 @@ class Gateway
         foreach ($this->account as $account) {
             if (in_array(strtolower($account['Entidade']), $this->paymentMethods)) {
                 $userPaymentMethods[] = strtolower($account['Entidade']);
-            } elseif (is_numeric($account['Entidade'])) {
+
+            // additional verification required to add the dynamic reference to multibanco payment method    
+            } elseif (is_numeric($account['Entidade']) || $account['Entidade'] === "MB" || $account['Entidade'] === "mb") {
                 $userPaymentMethods[] = $this->paymentMethods[0];
             }
         }

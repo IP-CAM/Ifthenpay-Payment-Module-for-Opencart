@@ -57,7 +57,7 @@ $_['entry_sort_order'] = 'Ordem do Método de Pagamento:';
 $_['entry_payshop_payshopKey'] = 'Payshop Key';
 $_['entry_payshop_validade'] = 'Validade';
 $_['payshop_validade_helper'] = 'Escolha o número de dias, deixe vazio se não pretender validade.';
-$_['choose_entity'] = 'Escolha a Entidade';
+$_['choose_key'] = 'Escolha a chave';
 $_['entry_antiPhishingKey'] = 'Chave Anti-Phishing';
 $_['entry_urlCallback'] = 'Url de Callback';
 $_['callbackIsActivated'] = 'Callback ativado';
@@ -88,4 +88,7 @@ $_['reset_account_error'] = 'Erro a reinicializar conta Ifthenpay!';
 $_['error_invalid_max_number'] = 'Aviso: Valor de encomenda máximo inválido!';
 $_['error_invalid_min_number'] = 'Aviso: Valor de encomenda mínimo inválido!';
 $_['error_incompatible_min_max'] = 'Aviso: Valor de encomenda mínimo e máximo não são compativeis!';
+$_['error_key_required'] = 'Aviso: Chave Payshop é obrigatória!';
+$_['error_invalid_expiration'] = 'Aviso: Validade inválida!';
+
 ?>

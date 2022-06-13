@@ -30,7 +30,9 @@ $_['moduleUpToDate'] = 'Your module is up to date!';
 $_['downloadUpdateModule'] = 'Download Update Module';
 $_['acess_user_documentation_link'] = 'https://www.ifthenpay.com/downloads/opencart/opencart_user_guide_en.pdf';
 $_['entry_minimum_value'] = 'Order Minimum Value';
+$_['help_entry_minimum_value'] = 'Only show customer this payment method if order value equal or greater than minimum value';
 $_['entry_maximum_value'] = 'Order Maximum Value';
+$_['help_entry_maximum_value'] = 'Only show customer this payment method if order value equal or less than maximum value';
 $_['resendPaymentData']	= 'Send email of order with payment data';
 
 
@@ -38,7 +40,8 @@ $_['resendPaymentData']	= 'Send email of order with payment data';
 $_['activate_callback'] = 'Activate Callback';
 $_['switch_enable'] = 'Enable';
 $_['switch_disable'] = 'Disable';
-$_['entry_order_status'] = 'Order Status:';
+$_['entry_order_status_pending'] = 'Order Status Pending:';
+$_['help_entry_order_status_pending'] = 'This status is assigned to the order upon it\'s creation and normaly, it is set as Pending';
 $_['entry_order_status_complete'] = 'Order Status Paid:';
 $_['entry_order_status_canceled'] = 'Order Status Canceled:';
 $_['entry_order_status_failed'] = 'Order Status Failed:';
@@ -48,6 +51,7 @@ $_['entry_sort_order'] = 'Sort Order:';
 $_['entry_multibanco_entidade'] = 'Entity';
 $_['entry_multibanco_SubEntidade'] = 'SubEntity';
 $_['choose_entity'] = 'Choose Entity';
+$_['choose_sub_entity'] = 'Choose SubEntity';
 $_['entry_antiPhishingKey'] = 'Anti-Phishing key';
 $_['entry_urlCallback'] = 'Callback Url';
 $_['callbackIsActivated'] = 'Callback is activated';
@@ -56,7 +60,7 @@ $_['sandboxActivated'] = 'Sandbox mode activated';
 $_['activate_cancelMultibancoOrder'] = 'Cancel Multibanco Order';
 $_['multibancoOrderCancel_help'] = 'Cancel Multibanco order after reference expire.';
 $_['show_paymentMethod_logo'] = 'Show Payment Method Logo on Checkout';
-$_['entry_multibanco_deadline'] = 'Multibanco Reference Deadline';
+$_['entry_multibanco_deadline'] = 'Multibanco Reference Expiration';
 $_['multibanco_deadline'] = 'Choose Deadline';
 $_['request_new_account_success'] = 'Email requesting new account send with success.';
 $_['request_new_account_error'] = 'Error sending email requesting new account.';
@@ -82,4 +86,9 @@ $_['text_instruction'] = 'CRON Instructions';
 $_['error_invalid_max_number'] = 'Warning: Order Maximum Value invalid number!';
 $_['error_invalid_min_number'] = 'Warning: Order Minimum Value invalid number!';
 $_['error_incompatible_min_max'] = 'Warning: Order Minimum and Maximum Values are not compatible!';
+$_['error_entity_required'] = 'Warning: Entity is required!';
+$_['error_sub_entity_required'] = 'Warning: SubEntity is required!';
+$_['error_dynamic_expiration_required'] = 'Warning: Dynamic reference expiration required!';
+
+
 ?>

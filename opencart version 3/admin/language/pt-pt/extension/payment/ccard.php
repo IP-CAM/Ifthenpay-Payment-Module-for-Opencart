@@ -52,7 +52,7 @@ $_['entry_geo_zone'] = 'Geo Zone:';
 $_['entry_status'] = 'Estados:';
 $_['entry_sort_order'] = 'Ordem do Método de Pagamento:';
 $_['entry_ccard_ccardKey'] = 'CCard Key';
-$_['choose_entity'] = 'Escolha a Entidade';
+$_['choose_key'] = 'Escolha a chave';
 $_['entry_antiPhishingKey'] = 'Chave Anti-Phishing';
 $_['entry_urlCallback'] = 'Url de Callback';
 $_['callbackIsActivated'] = 'Callback ativado';
@@ -77,4 +77,5 @@ $_['error_backofficeKey_error'] = 'Erro a salvar a chave de acesso ao backoffice
 $_['error_invalid_max_number'] = 'Aviso: Valor de encomenda máximo inválido!';
 $_['error_invalid_min_number'] = 'Aviso: Valor de encomenda mínimo inválido!';
 $_['error_incompatible_min_max'] = 'Aviso: Valor de encomenda mínimo e máximo não são compativeis!';
+$_['error_key_required'] = 'Aviso: Chave de Ccard é obrigatória!';
 ?>

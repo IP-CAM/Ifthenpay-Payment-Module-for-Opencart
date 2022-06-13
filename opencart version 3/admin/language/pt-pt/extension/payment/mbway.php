@@ -49,8 +49,8 @@ $_['entry_order_status_canceled'] = 'Estado da Encomenda Cancelado:';
 $_['entry_geo_zone'] = 'Geo Zone:';
 $_['entry_status'] = 'Estados:';
 $_['entry_sort_order'] = 'Ordem do Método de Pagamento:';
-$_['entry_mbway_mbwayKey'] = 'Mb WAY key';
-$_['choose_entity'] = 'Escolha a Entidade';
+$_['entry_mbway_mbwayKey'] = 'MB WAY key';
+$_['choose_key'] = 'Escolha a chave';
 $_['activate_cancelMbwayOrder'] = 'Cancelar Encomenda MB WAY';
 $_['mbwayOrderCancel_help'] = 'Cancele a encomenda MB WAY após a notificação expirar.';
 $_['entry_antiPhishingKey'] = 'Chave Anti-Phishing';
@@ -81,4 +81,6 @@ $_['text_instruction'] = 'CRON Instruções';
 $_['error_invalid_max_number'] = 'Aviso: Valor de encomenda máximo inválido!';
 $_['error_invalid_min_number'] = 'Aviso: Valor de encomenda mínimo inválido!';
 $_['error_incompatible_min_max'] = 'Aviso: Valor de encomenda mínimo e máximo não são compativeis!';
+$_['error_key_required'] = 'Aviso: Chave MB WAY é obrigatória!';
+
 ?>
